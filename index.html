@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAREA 2</title>
+    <style>
+
+        body{
+            background-image: url(/dark.jpg);
+        }
+      
+        .principal {
+            text-align: center;
+            border-color: blue;
+            margin: 100px;
+            background-color: rgba(197, 184, 184, 0.539);
+            color: white;
+            padding: 40px;
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="principal">
+        <h2 id="formulario">Formulario Dinámico</h2>
+        <form id="dynamic-form">
+            <div id="inputs-container" class="btn-lg mr-3"> 
+            </div>
+            <button type="button" class="btn btn-outline-warning btn-lg" onclick="agregarInput()">Agregar Input</button>
+            <button type="button" class="btn btn-outline-danger btn-lg" onclick="eliminarInput()">Eliminar Input</button>
+            <br><br>
+            <button type="submit"  class="btn btn-outline-success btn-lg" >Enviar Formulario</button>
+        </form>
+
+        <div id="mensaje"></div>
+        
+    </div>
+    
+    
+
+    <script>
+        function agregarInput() {
+            let container = document.getElementById('inputs-container');
+            let newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.name = 'dynamicInput';
+            newInput.placeholder = 'Ingrese datos';
+            container.appendChild(newInput);
+        }
+
+        function eliminarInput() {
+            let container = document.getElementById('inputs-container');
+            let inputs = container.getElementsByTagName('input');
+            if (inputs.length > 0) {
+                container.removeChild(inputs[inputs.length - 1]);
+            }
+        }
+
+        document.getElementById('dynamic-form').addEventListener('submit', function (event) {
+            let inputs = document.getElementsByName('dynamicInput');
+            let formValido = true;
+
+            for (let i = 0; i < inputs.length; i++) {
+                if (inputs[i].value.trim() === '') {
+                    inputs[i].classList.add('error');
+                    formValido = false;
+                } else {
+                    inputs[i].classList.remove('error');
+                }
+            }
+
+            if (!formValido) {
+                event.preventDefault();
+                document.getElementById('mensaje').textContent = 'Por favor complete todos los campos.';
+            } else {
+                document.getElementById('mensaje').textContent = 'Formulario enviado correctamente.';
+            }
+        });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
